@@ -1,0 +1,301 @@
+Program 7: Design an algorithm  and write code to find first common ancestor of two nodes in binary tree .
+
+
+Idea
+
+
+    create a binary tree and insert the nodes in tree
+    check for given nodes common ancestor
+        check for both nodes are on same side
+        check for both nodes are on different side
+
+
+
+Source Code:
+
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.print(data+" ");
+
+ }
+
+}
+
+class BinaryTree
+
+{
+
+ private Node root;
+
+ public BinaryTree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return root==null;
+
+ }
+
+ 
+
+ public void Display()
+
+ {
+
+  System.out.println("The inorder of the given tree:");
+
+  Inorder(root);
+
+  System.out.println();
+
+ }
+
+ private void Inorder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+   Inorder(root.left);
+
+   root.Display();
+
+   Inorder(root.right);
+
+  }
+
+ }
+
+ 
+
+ public void Insert(int value)
+
+ {
+
+  root=Insert(root,value);
+
+ }
+
+ 
+
+ public Node Insert(Node root, int value)
+
+ {
+
+  if(root==null)
+
+  {
+
+  Node newNode=new Node(value);
+
+  root=newNode;
+
+  return root;
+
+  }
+
+  if(root.right==null)
+
+   root.right=Insert(root.right,value);
+
+  else
+
+   root.left=Insert(root.left,value);
+
+  return root;
+
+ }
+
+ 
+
+ public Node Search(int value)
+
+ {
+
+  return Search(root,value);
+
+ }
+
+ 
+
+ public Node Search(Node root, int value) 
+
+ {
+
+     if(root==null)
+
+   return null;
+
+  
+
+   if(root.data==value)
+
+    return root;
+
+   Node temp= Search(root.left,value);
+
+        if(temp!=null)
+
+            return temp;
+
+        return Search(root.right,value);
+
+ }
+
+ //this function is checking for node which ancestor we want is it in tree or not.
+
+ public boolean covers(Node root, Node p)
+
+ {
+
+  if(root==null)
+
+  return false;
+
+  if(root==p)
+
+  return true;
+
+  return covers(root.left,p)||covers(root.right,p);
+
+ }
+
+ public Node CommonAncestorHelper(Node root,Node p,Node q)
+
+ {
+
+  if(root==null)
+
+   return null;
+
+  if(root==p||root==q)
+
+   return root;
+
+  
+
+  boolean p_on_left=covers(root.left,p);
+
+  boolean q_on_left=covers(root.left,q);
+
+  
+
+  //check both nodes p and q are different side,return root
+
+  
+
+  if(p_on_left!=q_on_left)
+
+   return root;
+
+  
+
+  //check both nodes p, q are on same side.traverse this side
+
+  
+
+  Node  child_side=p_on_left?root.left:root.right;
+
+  return CommonAncestorHelper(child_side,p,q);  
+
+ }
+
+ 
+
+ public Node CommonAncestor(Node root,Node p,Node q)
+
+ {
+
+  if(!covers(root,p)||!covers(root,q))
+
+   return null;
+
+  return CommonAncestorHelper(root,p,q);
+
+ }
+
+ public Node getRoot()
+
+ {
+
+  return root;
+
+ }
+
+}
+
+public class Program7 {
+
+
+ public static void main(String[] args) 
+
+ {
+
+  BinaryTree bt=new BinaryTree();
+
+  bt.Insert(60);
+
+  bt.Insert(30);
+
+  bt.Insert(100);
+
+  bt.Insert(10);
+
+  bt.Insert(5);
+
+  bt.Insert(15);
+
+  bt.Insert(70);
+
+  bt.Insert(80);
+
+  
+
+  bt.Display();
+
+  
+
+  Node p=bt.Search(10);
+
+  Node q=bt.Search(70);
+
+  Node root=bt.getRoot();
+
+  Node temp=bt.CommonAncestor(root,p,q);
+
+  if(temp!=null)
+
+   temp.Display(); 
+
+ }
+
+
+}
