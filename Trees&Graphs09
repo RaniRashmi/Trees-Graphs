@@ -1,0 +1,318 @@
+Program 9 :we have binary tree in which each node have some value.Design an algorithm to
+
+print all paths which sum to a given value.The path does not start or end at root or a leaf.
+
+
+
+Source code:
+
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+ System.out.print(data+" ");
+
+ }
+
+}
+
+class BinaryTree
+
+{
+
+ private Node root;
+
+ public BinaryTree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean isEmpty()
+
+ {
+
+  return root==null;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println("The inorder of a given tree:");
+
+  Inorder(root);
+
+  System.out.println();
+
+ }
+
+ public void Inorder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+    Inorder(root.left);
+
+    root.Display();
+
+    Inorder(root.right);
+
+  }
+
+ }
+
+ public void Insert(int value)
+
+ {
+
+  root=Insert(root,value);
+
+ }
+
+ public Node Insert(Node root, int value)
+
+ {
+
+  if(root==null)
+
+  {
+
+   Node newNode=new Node(value);
+
+   root=newNode;
+
+   return root;
+
+  }
+
+  if(root.right==null)
+
+   root.right=Insert(root.right,value);
+
+  else
+
+     root.left=Insert(root.left,value);
+
+  
+
+  return root;
+
+ }
+
+ public Node Search(int value)
+
+ {
+
+  return Search(root,value);
+
+ }
+
+ public Node Search(Node root, int value)
+
+ {
+
+  if(root==null)
+
+   return null;
+
+  if(root.data==value)
+
+   return root;
+
+  Node temp=Search(root.left,value);
+
+  if(temp==null)
+
+      temp=Search(root.right,value);
+
+  return temp;
+
+ }
+
+ public Node getRoot()
+
+ {
+
+  return root;
+
+ }
+
+}
+
+class Path
+
+{
+
+ public void findSum(Node root,int sum)
+
+ {
+
+  int depth=depth(root);
+
+  int []path=new int[depth];
+
+  findSum(root,sum,path,0);
+
+ }
+
+
+ public void findSum(Node root, int sum, int[] path, int level)
+
+ {
+
+  if(root==null)
+
+   return;
+
+  
+
+  //insert current node into path
+
+  
+
+    path[level]=root.data;
+
+    
+
+    //look for paths with a sum that ends at this node
+
+    
+
+    int t=0;
+
+    for(int i=level;i>=0;i--)
+
+    {
+
+     t+=path[i];
+
+     if(t==sum)
+
+     print(path,i,level);
+
+    }
+
+    
+
+    //search node beneath this one
+
+    
+
+    findSum(root.left,sum,path,level+1);
+
+    findSum(root.right,sum,path,level+1);
+
+    
+
+    //path[level]=Integer.MIN_VALUE; //remove the current node from path
+
+ }
+
+
+ public void print(int[] path, int start, int end) 
+
+ {
+
+  for(int i=start;i<=end;i++)
+
+  {
+
+   System.out.print(path[i]+" ");
+
+  }
+
+  System.out.println();
+
+   
+
+ }
+
+
+ public int depth(Node root)
+
+ {
+
+  if(root==null)
+
+   return 0;
+
+  else
+
+   return 1+Math.max(depth(root.left),depth(root.right));
+
+ }
+
+}
+
+public class Program9 {
+
+ public static void main(String[] args) 
+
+ {
+
+  BinaryTree bt=new BinaryTree();
+
+  bt.Insert(1);
+
+  bt.Insert(2);
+
+  bt.Insert(3);
+
+  bt.Insert(4);
+
+  bt.Insert(5);
+
+  bt.Insert(6);
+
+  bt.Insert(7);
+
+  
+
+  bt.Display();
+
+  
+
+  Node temp=bt.getRoot();
+
+  
+
+  Path p=new Path();
+
+  
+
+  p.findSum(temp,7);
+
+  
+
+ }
+
+
+}
+
+
+
+
