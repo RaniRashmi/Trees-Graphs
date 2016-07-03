@@ -1,0 +1,185 @@
+Program 3:Given a sorted array(increasing order)with unique integer elements,write an algorithm
+
+to create a binary search tree with minimal height.
+
+
+Idea-
+
+
+    As sorted array is already given we can find the middle element of sorted array and divide the array in left and right sub-array
+    insert the middle element of array into the tree.
+    insert left sub-array element into the left sub-tree
+    insert right sub-array element into the right sub-tree
+    recurses the function
+
+
+
+
+Source code:
+
+
+import java.util.Scanner;
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.print(data+" ");
+
+ }
+
+}
+
+class tree
+
+{
+
+ private Node root;
+
+ public tree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return root==null;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println("the inorder of tree:");
+
+  InOrder(root);
+
+  System.out.println();
+
+  
+
+ }
+
+ 
+
+ private void InOrder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+   InOrder(root.left);
+
+   root.Display();
+
+   InOrder(root.right);
+
+  }
+
+ }
+
+ public Node CreateMinimulBST(int []arr,int start,int end)
+
+ {
+
+  if(end<start)
+
+  {
+
+   return null;
+
+  }
+
+  int value,mid;
+
+  mid=(start+end)/2;
+
+  value=arr[mid];
+
+  Node newNode=new Node(value);
+
+  newNode.left=CreateMinimulBST(arr,start,mid-1);
+
+  newNode.right=CreateMinimulBST(arr,mid+1,end);
+
+  return newNode;
+
+ }
+
+ public Node GetRoot()
+
+ {
+
+  return root;
+
+ }
+
+ public void SetRoot(Node n)
+
+ {
+
+  root=n;
+
+ }
+
+}
+
+//main function
+
+public class Program3 {
+
+
+ public static void main(String[] args) {
+
+  
+
+  int n,i;
+
+  Scanner in=new Scanner(System.in);
+
+  n=in.nextInt();
+
+  int[]arr=new int[n];
+
+  for(i=0;i<n;i++)
+
+   arr[i]=in.nextInt();
+
+  
+
+  tree t=new tree();
+
+  t.SetRoot(t.CreateMinimulBST(arr,0,n-1));
+
+  t.Display();
+
+ }
+
+
+}
+
+
