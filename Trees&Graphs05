@@ -1,0 +1,238 @@
+Program 5:Implement a function to check if a given binary tree is a binary search tree
+
+
+Idea-
+
+
+    every time we will check Binary search tree condition(i.e. left node data should be less than root data and root data should be less than right side data) in a given binary tree.
+
+
+
+
+Source code:
+
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println(data+" ");
+
+ }
+
+}
+
+class BinaryTree
+
+{
+
+ private Node root;
+
+ public BinaryTree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return root==null;
+
+ }
+
+ public void Display()
+
+ {
+
+      System.out.println("The inorder of a given tree:");
+
+      InOrder(root);
+
+      System.out.println();
+
+ }
+
+ public void InOrder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+   InOrder(root.left);
+
+   root.Display();
+
+   InOrder(root.right);
+
+  }
+
+ }
+
+ public void insert(int value)
+
+ {
+
+  root=insert(root,value);
+
+ }
+
+ public Node insert(Node root, int value)
+
+ {
+
+  if(root==null)
+
+  {
+
+   Node newNode=new Node(value);
+
+   newNode=root;
+
+   return newNode;
+
+  }
+
+  if(root.right==null)
+
+   root.right=insert(root.right,value);
+
+  else
+
+   root.left=insert(root.left,value);
+
+  return root;
+
+ }
+
+ public boolean CheckBST()
+
+ {
+
+  return CheckBST(root);
+
+ }
+
+ public boolean CheckBST(Node root)
+
+ {
+
+  if(root==null)
+
+  return true;
+
+  if(root.left!=null)
+
+  if(root.data<root.left.data)
+
+   return false;
+
+  if(root.data>root.right.data)
+
+     return false;
+
+  
+
+  boolean flag=CheckBST(root.left);
+
+  if(!flag)
+
+   return false;
+
+  
+
+  flag=CheckBST(root.right);
+
+  if(!flag)
+
+   return false;
+
+  return true; 
+
+ }
+
+ 
+
+}
+
+public class Program5 
+
+{
+
+ public static void main(String[] args) 
+
+ {
+
+  BinaryTree bt=new BinaryTree();
+
+  bt.insert(40);
+
+  bt.insert(20);
+
+  bt.insert(60);
+
+  
+
+  bt.Display();
+
+  
+
+  boolean flag=bt.CheckBST();
+
+  if(flag)
+
+   System.out.println("yes,Given tree is BST");
+
+  else
+
+   System.out.println("No,Given tree is not BST");
+
+  
+
+  bt.insert(20);
+
+  bt.insert(80);
+
+  bt.Display();
+
+  
+
+  flag=bt.CheckBST();
+
+  if(flag)
+
+   System.out.println("yes,Given tree is BST");
+
+  else
+
+   System.out.println("No,Given tree is not BST");
+
+  
+
+ 
+
+ }
+
+
+}
