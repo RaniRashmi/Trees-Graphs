@@ -1,0 +1,268 @@
+Problem 1:Implement a function to check if binary tree is balanced.
+
+
+Solution:
+
+
+    find the min height and maximum height of sub-tree and compare they are differ by on than tree is balance otherwise it is unbalanced.
+
+
+
+Source code:
+
+
+class Node
+
+{
+
+ int data;
+
+ Node left;
+
+ Node right;
+
+ 
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println(data+" ");
+
+ }
+
+}
+
+class BinaryTree
+
+{
+
+ Node root;
+
+ public BinaryTree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return(root==null);
+
+ }
+
+ public void Insert(int value)
+
+ {
+
+  root=Insert(root,value);
+
+ }
+
+ public Node Insert(Node root, int value) {
+
+  if(root==null)
+
+  {
+
+   Node newNode=new Node(value);
+
+   root=newNode;
+
+  }
+
+  else
+
+  {
+
+  if(root.left==null)
+
+   root.left=Insert(root.left,value);
+
+  else
+
+   root.right=Insert(root.right,value); 
+
+  }
+
+  return root;
+
+ }
+
+ public void InOrder()
+
+ {
+
+  System.out.println("the inorder display:");
+
+  InOrder(root);
+
+  System.out.println();
+
+ }
+
+ public void InOrder(Node root) {
+
+   if(root!=null)
+
+   {
+
+    InOrder(root.left);
+
+    root.Display();
+
+    InOrder(root.right);
+
+   }
+
+ }
+
+ public int GetMinHeight()
+
+ {
+
+  return GetMinHeight(root);
+
+ }
+
+ public int GetMinHeight(Node root)
+
+ {
+
+  if(root==null)
+
+  return 0;
+
+  return 1+min(GetMinHeight(root.left),GetMinHeight(root.right));
+
+ }
+
+ private int min(int i, int j) {
+
+  return i>j?j:i;
+
+ }
+
+ 
+
+ public int GetMaxHeight()
+
+ {
+
+  return GetMaxHeight(root);
+
+ }
+
+
+ public int GetMaxHeight(Node root) {
+
+  if(root==null)
+
+  return 0;
+
+  return 1+max(GetMaxHeight(root.left),GetMaxHeight(root.right));
+
+ }
+
+ private int max(int i, int j) {
+
+  return i>j?i:j;
+
+ }
+
+ public boolean IsBalanceTree()
+
+ {
+
+ int i=GetMinHeight();
+
+ int j=GetMaxHeight();
+
+ if(j-i<=1)
+
+  return true;
+
+ else
+
+    return false;
+
+    }
+
+}
+
+public class Problem1 {
+
+ public static void main(String[] args) {
+
+  
+
+  BinaryTree tree=new BinaryTree();
+
+  tree.Insert(30);
+
+  tree.Insert(50);
+
+  tree.Insert(40);
+
+  tree.Insert(20);
+
+  tree.Insert(60);
+
+ 
+
+  tree.InOrder();
+
+  boolean flag=tree.IsBalanceTree();
+
+  if(flag)
+
+  System.out.println("the binary tree is balance");
+
+  else
+
+  System.out.println("the binary tree is not balanced");
+
+  
+
+  tree.Insert(65);
+
+  tree.Insert(85);
+
+  tree.Insert(70);
+
+  tree.Insert(45);
+
+  
+
+  tree.InOrder();
+
+  
+
+  flag=tree.IsBalanceTree();
+
+  if(flag)
+
+  System.out.println("the binary tree is balance");
+
+  else
+
+  System.out.println("the binary tree is not balanced");
+
+  
+
+ }
+
+
+}
