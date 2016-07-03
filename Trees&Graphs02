@@ -1,0 +1,214 @@
+Program 2:Given a directed graph,design an algorithm to find out whether there is route between
+
+two nodes.
+
+
+
+    Method 1-using BFS
+    Method 2-using DFS
+
+
+
+Source code:
+
+
+import java.util.Scanner;
+
+import java.util.Queue;
+
+import java.util.LinkedList;
+
+import java.util.Stack;
+
+
+public class Program2 {
+
+
+ public static void main(String[] args) {
+
+  int i,j,source,destination,n;
+
+  Scanner in =new Scanner(System.in);
+
+  n=in.nextInt();
+
+  int[][]A=new int[n][n];
+
+  for(i=0;i<n;i++)
+
+   for(j=0;j<n;j++)
+
+   A[i][j]=in.nextInt();
+
+  source=in.nextInt();
+
+  destination=in.nextInt();
+
+  boolean flag;
+
+  flag=DoesRouteExistThroughBFS(A,source,destination);
+
+  if(flag)
+
+   System.out.println("yes there exist a route:using BFS method");
+
+  else
+
+   System.out.println("yes there does not exist a route:using BFS method");
+
+        
+
+  flag=DoesRouteExistThroughDFS(A,source,destination);
+
+  if(flag)
+
+   System.out.println("yes there exist a route:using DFS method");
+
+  else
+
+   System.out.println("yes there does not exist a route:using DFs method");
+
+ }
+
+
+
+private static boolean DoesRouteExistThroughBFS(int[][] A, int source,int destination)
+
+{
+
+ //this will not work when source and destination will be same
+
+ //we can not display route using bfs
+
+ 
+
+ Queue<Integer> que=new LinkedList<Integer>();
+
+ int[]visited=new int[A.length];
+
+ int i,j;
+
+ 
+
+ que.add(source);
+
+ i=source;
+
+ visited[i]=1;
+
+ 
+
+  while(!que.isEmpty())
+
+  {
+
+   for(j=0;j<A.length;j++)
+
+   {
+
+    if(A[i][j]==1&&visited[j]==0)
+
+    {
+
+     que.add(i);
+
+     visited[j]=1;
+
+     if(j==destination)
+
+      return true;
+
+    }
+
+   }
+
+   que.remove();
+
+  }
+
+  return false;
+
+ }
+
+
+
+private static boolean DoesRouteExistThroughDFS(int[][] A, int source,int destination) {
+
+
+  Stack <Integer>st=new Stack<Integer>();
+
+  int[] visited=new int[A.length];
+
+  int i,j,k;
+
+  boolean flag;
+
+  
+
+  st.push(source);
+
+  visited[source]=1;
+
+  
+
+  while(!st.isEmpty())
+
+  {
+
+   i=st.peek();
+
+   flag=false;
+
+   for(j=0;j<A.length;j++)
+
+   {
+
+   if(A[i][j]==1&&visited[j]==0)
+
+   {
+
+    st.push(j);
+
+    visited[j]=1;
+
+    flag=true;
+
+    if(j==destination)
+
+    {
+
+     System.out.println("The route from source to destination is as:");
+
+     for(k=0;k<st.size();k++)
+
+     System.out.print(st.get(k)+" ");
+
+     return true;
+
+    }
+
+   }
+
+    }
+
+    if(!flag)
+
+    st.pop(); 
+
+  }
+
+  return true;
+
+ }
+
+}
+
+
+
+Output:
+
+    to get the output first input matrix :for example if matrix is 4 row and 4 column then enter the input 4
+    After than input the graph in the form of matrix
+     by putting the value of matrix keep in mind all value put with a gap because other wise it will consider it as string not matrix
+
+
