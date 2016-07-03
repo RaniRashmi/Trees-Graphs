@@ -1,0 +1,298 @@
+Program 8:you have two very large binary tree:t1 with millions of nodes and t2 with hundreds  of nodes.write a program to decide if t2 is a subtree of t1.
+
+
+Source code:
+
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.print(data+" ");
+
+ }
+
+}
+
+class BinaryTree
+
+{
+
+ private Node root;
+
+ public BinaryTree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmplty()
+
+ {
+
+  return root==null;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println("The inorder travsal of a given tree:");
+
+  Inorder(root);
+
+  System.out.println();
+
+ }
+
+ public void Inorder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+   Inorder(root.left);
+
+   root.Display();
+
+   Inorder(root.right); 
+
+  }
+
+ }
+
+ public void Insert(int value)
+
+ {
+
+  root=Insert(root,value);
+
+ }
+
+ public Node Insert(Node root, int value)
+
+ {
+
+  if(root==null)
+
+  {
+
+   Node newNode=new Node(value);
+
+   root=newNode;
+
+   return root;
+
+  }
+
+  if(root.right==null)
+
+   root.right=Insert(root.right,value);
+
+  else
+
+   root.left=Insert(root.left,value);
+
+  return root;
+
+ }
+
+ public Node Search(int value)
+
+ {
+
+  return Search(root,value);
+
+ }
+
+ public Node Search(Node root, int value)
+
+ {
+
+  if(root==null)
+
+   return null;
+
+  if(root.data==value)
+
+   return root;
+
+  Node temp=Search(root.left,value);
+
+  if(temp==null)
+
+   temp=Search(root.right,value);
+
+  return temp;
+
+ }
+
+ public Node getRoot()
+
+ {
+
+  return root;
+
+ }
+
+}
+
+class isSubtree
+
+{
+
+ public boolean ContainsTree(Node t1,Node t2)
+
+ {
+
+  //empty tree is always a subtree
+
+  if(t2==null)
+
+   return true;
+
+  return subtree(t1,t2);
+
+ }
+
+ public boolean subtree(Node t1, Node t2)
+
+ {
+
+  if(t1==null)
+
+  return false;//big tree is empty and subtree still not found
+
+  
+
+  if(t1.data==t2.data)
+
+  {
+
+   if(matchTree(t1,t2))
+
+    return true;
+
+  }
+
+  return(subtree(t1.left,t2)||subtree(t1.right,t2));
+
+    }
+
+ public  boolean matchTree(Node t1, Node t2)
+
+ {
+
+  //if both are empty
+
+  if(t2==null&& t1==null)
+
+   return true; //nothing left in the subtree
+
+  
+
+  if(t1==null || t2==null)//if one is empty
+
+   return false;
+
+  
+
+  if(t1.data!=t2.data)
+
+   return false; //data does not match
+
+  
+
+  return(matchTree(t1.left,t2.left)&&matchTree(t1.right,t2.right));
+
+ }
+
+}
+
+public class Program8 {
+
+ public static void main(String[] args)
+
+ {
+
+  BinaryTree bt1=new BinaryTree();
+
+  bt1.Insert(50);
+
+  bt1.Insert(30);
+
+  bt1.Insert(40);
+
+  bt1.Insert(60);
+
+  bt1.Insert(10);
+
+  bt1.Insert(80);
+
+  bt1.Insert(90);
+
+  
+
+  bt1.Display();
+
+  Node t1=bt1.getRoot();
+
+  
+
+  BinaryTree bt2=new BinaryTree();
+
+  bt2.Insert(10);
+
+  bt2.Insert(80);
+
+  bt2.Insert(90);
+
+  
+
+  bt2.Display();
+
+  Node t2=bt2.getRoot();
+
+  
+
+  isSubtree object=new isSubtree();
+
+  boolean flag=object.ContainsTree(t1,t2);
+
+  if(flag)
+
+   System.out.println("yes,the given tree is a subtree:");
+
+  else
+
+   System.out.println("No,given tree is not a subtree:");
+
+ }
+
+
+}
+
+
+
+For any query please comment....
