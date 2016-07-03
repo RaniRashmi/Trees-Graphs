@@ -1,0 +1,537 @@
+Program 4:Given a binary tree ,design an algorithm which creates a linked list of all the nodes at each depth.
+
+
+Example:If we have tree with depth d that means we will have d linked list.
+
+
+Method 1:
+
+
+    using Depth first search.
+    here we calling function recursively.
+
+
+Source code:
+
+
+import java.util.ArrayList;
+
+import java.util.LinkedList;
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ 
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println(data+" ");
+
+ }
+
+}
+
+class BST
+
+{
+
+ private Node root;
+
+ public BST()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return root==null;
+
+ }
+
+ public void insert(int value)
+
+ {
+
+  root=insert(root,value);
+
+ }
+
+ public Node insert(Node root, int value)
+
+ {
+
+  if(root==null)
+
+  {
+
+   Node newNode=new Node(value);
+
+   root=newNode;
+
+   return root;
+
+  }
+
+  if(root.data>value)
+
+  root.left=insert(root.left,value);
+
+  else
+
+  root.right=insert(root.right,value);
+
+  return root;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println("The inorder display of given tree:");
+
+  Inorder(root);
+
+  System.out.println();
+
+ }
+
+ public void Inorder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+   Inorder(root.left);
+
+   root.Display();
+
+   Inorder(root.right);
+
+  } 
+
+ }
+
+ public Node getRoot()
+
+ {
+
+  return root;
+
+ }
+
+ public ArrayList<LinkedList<Node>> CreateLevelLinkedList(Node root)
+
+ {
+
+  ArrayList<LinkedList<Node>> lists=new ArrayList<LinkedList<Node>>();
+
+  CreateLevelLinkedList(lists,0,root);
+
+  return lists;
+
+ }
+
+public void CreateLevelLinkedList(ArrayList<LinkedList<Node>> lists,int level, Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+  LinkedList<Node>list;
+
+  if(lists.size()==level)
+
+  {
+
+   //lists-array list while list-linked list
+
+   //linked list size will be 0 and level also 0 means we need to create a new linked list
+
+    
+
+    list =new LinkedList<Node>();
+
+    lists.add(list);
+
+  }
+
+  else
+
+  {
+
+    list=lists.get(level);
+
+  }
+
+  list.add(root);
+
+  CreateLevelLinkedList(lists,level+1,root.left);
+
+  CreateLevelLinkedList(lists,level+1,root.right);  
+
+  } 
+
+ }
+
+}
+
+public class Program4 {
+
+
+ public static void main(String[] args)
+
+ {
+
+  BST bst=new BST();
+
+  bst.insert(40);
+
+  bst.insert(20);
+
+  bst.insert(70);
+
+  bst.insert(60);
+
+  bst.insert(10);
+
+  bst.insert(30);
+
+  bst.insert(50);
+
+  
+
+  bst.Display();
+
+  
+
+  Node root=bst.getRoot();
+
+  ArrayList<LinkedList<Node>> object=bst.CreateLevelLinkedList(root);
+
+  System.out.println("here is the level order linkedlist");
+
+  int i,j;
+
+  for(i=0;i<object.size();i++)
+
+  {
+
+  for(j=0;j<object.get(i).size();j++)
+
+  {
+
+   object.get(i).get(j).Display(); 
+
+  }
+
+  System.out.println("This is level"+i);
+
+  }
+
+  
+
+ }
+
+
+}
+
+
+
+Method 2:
+
+
+    Using BFS(breath first search)
+    Iterate through root first at level 1
+    Iterate level 2, 3, so on
+
+
+
+import java.util.ArrayList;
+
+import java.util.LinkedList;
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ 
+
+ public Node(int value)
+
+ {
+
+  data=value;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println(data+" ");
+
+ }
+
+}
+
+class BST
+
+{
+
+ private Node root;
+
+ public BST()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean IsEmpty()
+
+ {
+
+  return root==null;
+
+ }
+
+ public void insert(int value)
+
+ {
+
+  root=insert(root,value);
+
+ }
+
+ public Node insert(Node root, int value)
+
+ {
+
+  if(root==null)
+
+  {
+
+   Node newNode=new Node(value);
+
+   root=newNode;
+
+   return root;
+
+  }
+
+  if(root.data>value)
+
+  root.left=insert(root.left,value);
+
+  else
+
+  root.right=insert(root.right,value);
+
+  return root;
+
+ }
+
+ public void Display()
+
+ {
+
+  System.out.println("The inorder display of given tree:");
+
+  Inorder(root);
+
+  System.out.println();
+
+ }
+
+ public void Inorder(Node root)
+
+ {
+
+  if(root!=null)
+
+  {
+
+   Inorder(root.left);
+
+   root.Display();
+
+   Inorder(root.right);
+
+  } 
+
+ }
+
+ public Node getRoot()
+
+ {
+
+  return root;
+
+ }
+
+ 
+
+ public ArrayList<LinkedList<Node>> CreateLevelLinkedListUsingBFS()
+
+ {
+
+  ArrayList<LinkedList<Node>> lists=new ArrayList<LinkedList<Node>>();
+
+  LinkedList<Node> list=new LinkedList<Node>();
+
+  int level=0,i;
+
+  if(root==null)
+
+   return null;
+
+  list.add(root);//we will add root to the 1st linked list
+
+  lists.add(level,list);//now we add linked list to the array list
+
+  while(true)
+
+  {
+
+  list=new LinkedList<Node>();//we create new list at every level
+
+  //loop will run 0 to all nodes of the tree,level wise
+
+  for(i=0;i<lists.get(level).size();i++)
+
+  {
+
+   Node n=lists.get(level).get(i);
+
+   if(n!=null)
+
+   {
+
+    if(n.left!=null)
+
+       list.add(n.left);
+
+    if(n.right!=null)
+
+    list.add(n.right);
+
+   }
+
+  }
+
+  level++;
+
+  //if the last list has no elements then we know the tree is covered and we can return
+
+        if(list.size()>0)
+
+            lists.add(level, list);
+
+        else
+
+            break;
+
+ }
+
+ return lists;
+
+ }
+
+ 
+
+} 
+
+public class Program4 {
+
+ public static void main(String[] args) 
+
+ {
+
+  BST bst= new BST();
+
+        bst.insert(20);
+
+        bst.insert(30);
+
+        bst.insert(50);
+
+        bst.insert(40);
+
+        bst.insert(10);
+
+        bst.insert(60);
+
+        bst.insert(90);
+
+        bst.insert(70);
+
+        
+
+        bst.Display();
+
+        int i,j;
+
+        ArrayList<LinkedList<Node>> object= bst.CreateLevelLinkedListUsingBFS();
+
+        System.out.println("\nHere is the level order linkedlist using BFS");
+
+        for(i=0;i<object.size();i++)
+
+        {
+
+            for(j=0;j<object.get(i).size();j++)
+
+            {
+
+                object.get(i).get(j).Display();
+
+            }
+
+            System.out.println(" This is level "+i);
+
+        }
+
+  
+
+ }
+
+
+}
+
+
+
+Note :
+
+    Running time of both method is O(n)
+
+    they differ in space complexity as in first method extra O(log n) recursive call , each call add new level in to stack.but they both equally space efficient .
