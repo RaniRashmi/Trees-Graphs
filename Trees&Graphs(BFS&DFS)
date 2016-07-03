@@ -1,0 +1,204 @@
+Program: BFS & DFS implementation
+
+
+
+    BFS(Breath first search) using Matrix
+
+
+
+Source code-
+
+
+import java.util.Scanner;
+
+import java.util.LinkedList;
+
+import java.util.Queue;
+
+class BFS {
+
+ public static void main(String[] args) {
+
+  int i,j,n,source;
+
+  Scanner in =new Scanner(System.in);
+
+  n=in.nextInt();
+
+  int[][]A=new int[n][n];
+
+  for(i=0;i<n;i++)
+
+   for(j=0;j<n;j++)
+
+   A[i][j]=in.nextInt();
+
+   System.out.println("Enter the source for the graph:");
+
+    source=in.nextInt();
+
+    BreathFirstSearch(A,source);   
+
+ }
+
+
+ private static void BreathFirstSearch(int[][] A, int source) {
+
+  int i,j;
+
+  int[] visited=new int[A.length];
+
+  Queue<Integer> que =new LinkedList<Integer>();
+
+  
+
+  que.add(source);
+
+  j=source;
+
+  visited[j]=1;
+
+  while(!que.isEmpty())
+
+  {
+
+   for(i=0;i<A.length;i++)
+
+   {
+
+   if(A[j][i]==1&&visited[i]==0)
+
+   {
+
+    que.add(i);
+
+    visited[i]=1;
+
+   }
+
+   }
+
+   j=que.remove();
+
+   System.out.print(j+" ");
+
+  }
+
+ }
+
+
+}
+
+
+
+
+    DFS implementation using Matrix
+
+Source code-
+
+
+
+import java.util.Scanner;
+
+import java.util.LinkedList;
+
+import java.util.Queue;
+
+import java.util.Stack;
+
+public class DFS {
+
+ public static void main(String[] args) {
+
+  int i,j,source,n;
+
+  Scanner in =new Scanner(System.in);
+
+  n=in.nextInt();
+
+  int [][]A=new int[n][n];
+
+  for(i=0;i<n;i++)
+
+  for(j=0;j<n;j++)
+
+   A[i][j]=in.nextInt();
+
+  System.out.println("Enter the source node for the graph:");
+
+  source=in.nextInt();
+
+  System.out.println("Dfs traversal is:");
+
+  DFS(A,source);
+
+  
+
+ }
+
+
+ private static void DFS(int[][] A, int source) {
+
+  int i,j;
+
+  boolean flag;
+
+  int []visited=new int[A.length];
+
+  Stack<Integer> st=new Stack<Integer>();
+
+
+        st.push(source);
+
+        visited[source]=1;
+
+        System.out.print(source+" ");
+
+      
+
+        while(!st.isEmpty())
+
+        {
+
+         i=st.peek();
+
+         flag=false;
+
+         for(j=0;j<A.length;j++)
+
+         {
+
+         if(A[i][j]==1&&visited[j]==0&& !flag) 
+
+         {
+
+          st.push(j);
+
+          visited[j]=1;
+
+          System.out.print(j+" ");
+
+          flag=true;
+
+          //flag=true means there was at least one unvisited node left so there can be more
+
+                //flag=false means there is no unvisited node left hence we can pop this node
+
+         }
+
+         }
+
+         if(!flag)
+
+         st.pop();    
+
+ }
+
+  
+
+ }
+
+
+}
+
+
