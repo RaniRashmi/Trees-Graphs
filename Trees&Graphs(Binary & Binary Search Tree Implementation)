@@ -1,0 +1,815 @@
+Program:How to implement a Binary tree and Binary Search Tree
+
+
+Binary tree-
+
+     A tree which contain 0 or 1,or 2 child.
+     Nonlinear data structure.
+
+
+Source code:
+
+
+import java.util.Scanner;
+
+class Node
+
+{
+
+ int data;
+
+ Node left, right;
+
+ public Node()
+
+ {
+
+  data=0;
+
+  left=null;
+
+  right=null;
+
+ }
+
+ public Node(int n)
+
+ {
+
+  data=n;
+
+  left=null;
+
+  right=null;
+
+ }
+
+ public void setLeft(Node n)
+
+ {
+
+    left=n;
+
+ }
+
+ public void setRight(Node n)
+
+ {
+
+    right=n;
+
+ }
+
+ public Node getLeft()
+
+ {
+
+  return left;
+
+ }
+
+ public Node getRight()
+
+ {
+
+  return right;
+
+ }
+
+ public void setData(int d)
+
+ {
+
+  data=d;
+
+ }
+
+ public int getData()
+
+ {
+
+  return data;
+
+ }
+
+ 
+
+}
+
+class BinaryTree
+
+{
+
+ private Node root;
+
+ public BinaryTree()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean isEmpty()
+
+ {
+
+  return(root==null);
+
+ }
+
+ public void insert(int data)
+
+ {
+
+  root=insert(root,data);
+
+ }
+
+ public Node insert(Node node,int data)
+
+ {
+
+  if(node==null)
+
+   node=new Node(data);
+
+  else
+
+  {
+
+   if(node.getRight()==null)
+
+    node.right=insert(node.right,data);
+
+   else
+
+    node.left=insert(node.left,data);
+
+  }
+
+  return node;
+
+  
+
+ }
+
+ public int countNodes()
+
+ {
+
+  return countNodes(root);
+
+ }
+
+ public int countNodes(Node r)
+
+ {
+
+  if(r==null)
+
+   return 0;
+
+  else
+
+  {
+
+  int count=1;
+
+  count+=countNodes(r.getLeft());
+
+  count+=countNodes(r.getRight());
+
+  return count;
+
+  }
+
+ }
+
+ public boolean Search(int value)
+
+    {
+
+        return Search(root, value);
+
+    }
+
+ public boolean Search(Node r,int value)
+
+ {
+
+  if(r.getData()==value)
+
+   return true;
+
+  if(r.getLeft()!=null)
+
+   if(Search(r.getLeft(),value))
+
+    return true;
+
+  if(r.getRight()!=null)
+
+   if(Search(r.getRight(),value))
+
+    return true;
+
+  return false;
+
+ }
+
+ public void inorder()
+
+ {
+
+  inorder(root);
+
+ }
+
+ public void inorder(Node r)
+
+ {
+
+  if(r!=null)
+
+  {
+
+   inorder(r.getLeft());
+
+   System.out.println(r.getData()+" ");
+
+   inorder(r.getRight());
+
+  }
+
+ }
+
+ public void preorder()
+
+ {
+
+  preorder(root);
+
+ }
+
+ public void preorder(Node r)
+
+ {
+
+  if(r!=null)
+
+  {
+
+   System.out.println(r.getData()+" ");
+
+   preorder(r.getLeft());
+
+   preorder(r.getRight());
+
+  }
+
+ }
+
+ public void postorder()
+
+ {
+
+  postorder(root);
+
+ }
+
+ public void postorder(Node r)
+
+ {
+
+  if(r!=null)
+
+  {
+
+   postorder(r.getLeft());
+
+   postorder(r.getRight());
+
+   System.out.println(r.getData()+" ");
+
+   
+
+  }
+
+ }
+
+}
+
+public class BinaryTreeImplementation {
+
+  public static void main(String[] args) {
+
+ Scanner in =new Scanner(System.in);
+
+ 
+
+ BinaryTree bt=new BinaryTree();
+
+ System.out.println("Binary Tree");
+
+ char ch;
+
+ do
+
+ {
+
+  System.out.println("1. insert ");
+
+        System.out.println("2. search");
+
+        System.out.println("3. count nodes");
+
+  int choice =in.nextInt();
+
+  
+
+   switch(choice)
+
+   {
+
+    case 1:
+
+    System.out.println("Insert the element in binary tree:");
+
+       bt.insert(in.nextInt());
+
+       break;
+
+    case 2:
+
+       System.out.println(bt.Search(in.nextInt()));
+
+       
+
+       break;
+
+    case 3:
+
+    System.out.println("total elements in binary tree:"+bt.countNodes());
+
+       break;
+
+    default:
+
+    System.out.println("wrong entry");
+
+    break;
+
+   }
+
+   System.out.println("Inorder:");
+
+   bt.inorder();
+
+   System.out.println("preorder:");
+
+   bt.postorder();
+
+   System.out.println("postorder:");
+
+   bt.postorder();
+
+   
+
+   System.out.println("\n\nDo you want to continue (Type y or n) \n");
+
+       ch = in.next().charAt(0);                        
+
+       } while (ch == 'Y'|| ch == 'y'); 
+
+ 
+
+   
+
+    }
+
+}
+
+
+
+
+Binary search tree
+
+
+    In this tree, left node is less than root node while greater than right node.
+
+Source code:
+
+
+import java.util.Scanner;
+
+class Node
+
+{
+
+ int data;
+
+ Node left,right;
+
+ public Node()
+
+ {
+
+  left=null;
+
+  right=null;
+
+  data=0;
+
+ }
+
+ public Node(int n)
+
+ {
+
+  left=null;
+
+  right=null;
+
+  data=n;
+
+ }
+
+ public void setLeft(Node n)
+
+ {
+
+  left=n;
+
+ }
+
+ public void setRight(Node n)
+
+ {
+
+  right=n;
+
+ }
+
+ public Node getLeft()
+
+ {
+
+  return left;
+
+ }
+
+ public Node getRight()
+
+ {
+
+  return right;
+
+ }
+
+ public void setData(int d)
+
+ {
+
+  data=d;
+
+ }
+
+ public int getData()
+
+ {
+
+  return data;
+
+ }
+
+ 
+
+}
+
+
+class BST
+
+{
+
+ private Node root;
+
+ 
+
+ public BST()
+
+ {
+
+  root=null;
+
+ }
+
+ public boolean isEmpty()
+
+ {
+
+  return (root==null);
+
+ }
+
+ public void insert(int data)
+
+ {
+
+  root=insert(root,data);
+
+ }
+
+ public Node insert(Node node, int data)
+
+ {
+
+      if(node==null)
+
+        node=new Node(data);
+
+      else
+
+      {
+
+      if(data<=node.getData())
+
+       node.left=insert(node.left,data);
+
+      else
+
+       node.right=insert(node.right,data);
+
+      }
+
+      return node;
+
+ }
+
+ public int countNodes()
+
+    {
+
+        return countNodes(root);
+
+    }
+
+    
+
+    private int countNodes(Node r)
+
+    {
+
+        if (r == null)
+
+            return 0;
+
+        else
+
+        {
+
+            int count = 1;
+
+            count+= countNodes(r.getLeft());
+
+            count+= countNodes(r.getRight());
+
+            return count;
+
+        }
+
+    }
+
+    public boolean search(int value)
+
+    {
+
+        return search(root, value);
+
+    }
+
+   
+
+    private boolean search(Node r, int value)
+
+    {
+
+        boolean found = false;
+
+        while ((r != null) && !found)
+
+        {
+
+            int rvalue = r.getData();
+
+            if (value < rvalue)
+
+                r = r.getLeft();
+
+            else if (value> rvalue)
+
+                r = r.getRight();
+
+            else
+
+            {
+
+                found = true;
+
+                break;
+
+            }
+
+            found = search(r, value);
+
+        }
+
+        return found;
+
+    }
+
+    
+
+    public void inorder()
+
+    {
+
+        inorder(root);
+
+    }
+
+    private void inorder(Node r)
+
+    {
+
+        if (r != null)
+
+        {
+
+            inorder(r.getLeft());
+
+            System.out.print(r.getData() +" ");
+
+            inorder(r.getRight());
+
+        }
+
+    }
+
+    public void preorder()
+
+    {
+
+        preorder(root);
+
+    }
+
+    private void preorder(Node r)
+
+    {
+
+        if (r != null)
+
+        {
+
+            System.out.print(r.getData() +" ");
+
+            preorder(r.getLeft());             
+
+            preorder(r.getRight());
+
+        }
+
+    }
+
+    
+
+    public void postorder()
+
+    {
+
+        postorder(root);
+
+    }
+
+    private void postorder(Node r)
+
+    {
+
+        if (r != null)
+
+        {
+
+            postorder(r.getLeft());             
+
+            postorder(r.getRight());
+
+            System.out.print(r.getData() +" ");
+
+        }
+
+    }     
+
+}
+
+
+public class BinarySearchTree {
+
+ public static void main(String[] args) {
+
+    Scanner input=new Scanner(System.in);
+
+    
+
+    BST bst=new BST();
+
+    System.out.println("Binary search Tree");
+
+    char ch;
+
+    do
+
+    {
+
+     System.out.println("Binary Search Tree Operation");
+
+     System.out.println("1.insert");
+
+     System.out.println("2.Search");
+
+     System.out.println("3.count");
+
+     System.out.println("4.check empty");
+
+     
+
+     int c=input.nextInt();
+
+     switch(c)
+
+     {
+
+     case 1:
+
+      System.out.println("Insert elements in tree:");
+
+      bst.insert(input.nextInt());
+
+      break;
+
+     case 2:
+
+      System.out.println("Enter the element which you want to search");
+
+      System.out.println("seach result:" +bst.search(input.nextInt()));
+
+      break;
+
+     case 3:
+
+      System.out.println("Nodes:" +bst.countNodes());
+
+      break;
+
+     case 4:
+
+      System.out.println("Empty status="+bst.isEmpty());
+
+      break;
+
+     default:
+
+        System.out.println("Empty status="+bst.isEmpty());
+
+     break;
+
+     }
+
+     System.out.println("\n inorder");
+
+  bst.inorder();
+
+  
+
+  System.out.println("\n preorder");
+
+  bst.preorder();
+
+  
+
+  System.out.println("\n postorder");
+
+  bst.postorder();
+
+     
+
+        System.out.println("\n Do you want to continue(type Y or no)\n");
+
+        ch= input.next().charAt(0);
+
+        } while(ch=='Y' ||ch=='y');
+
+ }
+
+
+}
